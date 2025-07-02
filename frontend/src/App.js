@@ -14,7 +14,7 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get('/api/ultimas-coordenadas');
+      const res = await axios.get('/coordenadas');
       setCoords(res.data);
     };
     fetchData();
