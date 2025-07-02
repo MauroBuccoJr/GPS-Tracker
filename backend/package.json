@@ -1,12 +1,26 @@
-{ "name": "mqtt-mysql-backend", "version": "1.0.0", "description": "Backend 
-  Node.js para receber dados MQTT e salvar no MySQL", "main": "index.js", 
+{
+  "name": "mqtt-mysql-backend",
+  "version": "1.0.0",
+  "description": "Backend Node.js para receber dados MQTT e salvar no MySQL",
+  "main": "index.js",
   "scripts": {
-    "start": "node index.js", "dev": "nodemon index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
-  "keywords": [ "mqtt", "mysql", "nodejs", "express" ], "author": "Seu Nome", 
-  "license": "MIT", "dependencies": {
-    "dotenv": "^16.3.1", "mqtt": "^5.4.0", "mysql2": "^3.9.2"
+  "keywords": [
+    "mqtt",
+    "mysql",
+    "nodejs",
+    "express"
+  ],
+  "author": "Seu Nome",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "mqtt": "^5.4.0",
+    "mysql2": "^3.9.2"
   },
-  "devDependencies": { "nodemon": "^3.0.2"
+  "devDependencies": {
+    "nodemon": "^3.0.2"
   }
 }
