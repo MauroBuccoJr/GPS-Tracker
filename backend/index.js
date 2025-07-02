@@ -60,5 +60,11 @@ app.get('/coordenadas', async (req, res) => {
     const [rows] = await pool.query('SELECT * FROM coordenadas ORDER BY timestamp DESC LIMIT 100');
     res.json(rows);
   } catch (err) {
+    res.status(500).json({ error: 'Erro ao buscar dados' });
+  }
+});
 
-
+// ✅ Inicia o servidor
+app.listen(process.env.PORT || 3001, () => {
+  console.log(`🚀 Backend rodando na porta ${process.env.PORT || 3001}`);
+});
