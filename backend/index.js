@@ -46,4 +46,7 @@ pool.getConnection()
   .catch(err => {
     console.error('❌ Erro ao conectar no MySQL:', err.message);
   });
+app.listen(process.env.PORT || 3001, () => {
+  console.log(`🚀 Backend rodando na porta ${process.env.PORT || 3001}`);
+});
 
