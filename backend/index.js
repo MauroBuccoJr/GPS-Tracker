@@ -1,10 +1,14 @@
+const express = require('express');
 const mqtt = require('mqtt');
 const pool = require('./db');
 require('dotenv').config();
 
+const app = express();
+app.use(express.json()); // Para permitir POST com JSON
+
+// ✅ Conexão com MQTT
 const client = mqtt.connect(process.env.MQTT_BROKER);
 
-// ✅ Conexão com MQTT e inscrição
 client.on('connect', () => {
   console.log('✅ Conectado ao broker MQTT');
   client.subscribe(process.env.MQTT_TOPIC, (err) => {
@@ -16,7 +20,6 @@ client.on('connect', () => {
   });
 });
 
-// ✅ Tratamento de mensagens recebidas
 client.on('message', async (topic, message) => {
   try {
     const { id, latitude, longitude, timestamp } = JSON.parse(message.toString());
@@ -32,12 +35,11 @@ client.on('message', async (topic, message) => {
   }
 });
 
-// ✅ Erros de conexão MQTT
 client.on('error', (err) => {
   console.error('❌ Erro no MQTT:', err.message);
 });
 
-// ✅ Verificar conexão com o banco MySQL
+// ✅ Verificação de conexão com MySQL
 pool.getConnection()
   .then(conn => {
     console.log('✅ Conectado ao MySQL com sucesso');
@@ -46,7 +48,17 @@ pool.getConnection()
   .catch(err => {
     console.error('❌ Erro ao conectar no MySQL:', err.message);
   });
-app.listen(process.env.PORT || 3001, () => {
-  console.log(`🚀 Backend rodando na porta ${process.env.PORT || 3001}`);
+
+// ✅ Rota de teste
+app.get('/', (req, res) => {
+  res.send('API do GPS Tracker funcionando!');
 });
+
+// ✅ (Opcional) Endpoint para pegar coordenadas do banco
+app.get('/coordenadas', async (req, res) => {
+  try {
+    const [rows] = await pool.query('SELECT * FROM coordenadas ORDER BY timestamp DESC LIMIT 100');
+    res.json(rows);
+  } catch (err) {
+
 
